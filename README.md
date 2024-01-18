@@ -1,39 +1,64 @@
 # ABOUT #
 
-# Application for IT Grow Division for fetching data from API and display in the Datatable and detail modal.
+# Notify nexus
 
-**Github Link** - ***https://github.com/shahriar-jewel/IT-Grow-api-engine.git***
+**Github Link** - ***https://pijush.grameenphone.com/mcms/notify-nexus.git***
 
 # Technologies
  - [Node.js]
- - [Express.js]
+ - [Nest.js]
  - [TypeScript]
- - [MongoDB]
- - [PUG_template_engine]
+ - [Cassandra]
 
 ## Installation :zap:
 
+## Setup Docker Commons
+Docker Commons consists some common services configured to run via docker scripts to use centrally for applications in local development.
+ - Clone Docker Commons.
+ ```bash
+  git clone https://github.com/a-h-abid/docker-commons.git
+ ```
+ - We might not need all the services so remove the services we will not need.
+ - Be sure to create a docker network:
+ ```bash
+  docker network create common-net
+ ```
  **1. Clone this repo by running the following command :-**
  ```bash
-  git clone https://github.com/shahriar-jewel/IT-Grow-api-engine.git
+  git clone https://pijush.grameenphone.com/mcms/notify-nexus.git
  ```
- 
- **2. Now install all the required packages by running the following commands :-**
+ **2. Setting up the databases :-**
+ Cassandra
+ We need to create table in Cassandra.
+ - subscribed_topics table creation
  ```bash
-  npm install 
+  CREATE TABLE IF NOT EXISTS notificationservice.subscribed_topics (
+  msisdn varchar,
+  channel varchar,
+  channel_id int,
+  producer TEXT,
+  topic_id int,
+  topic varchar,
+  type varchar,
+  status tinyint,
+  PRIMARY KEY ((msisdn, type), producer, channel_id, topic)
+  );
  ```
- **3. Now start the react server by running the following command :-**
+ - Run the query to insert data
  ```bash
-  npm run build
-  npm run watch
+ insert into subscribed_topics(msisdn, producer, channel, topic, type, status) values (88017XXXXXXXX, "cmp", "mygp",topic one", "whitelist", 1);
  ```
- **3. Create a `config.json` file in the project root folder**
-   - `config.json` file contains all the environment variables required for running the project.
+
+ ## Setting up Notify nexus
+ - Rename docker/.envs/notify-nexus.example.env to docker/.envs/notify-nexus.env file:
+ - Rename docker/.envs/subscription-manager.example.env to docker/.envs/subscription-manager.env file:
+
+ Navigate to docker and run:
+ - docker-compose build --no-cache
+ - docker-compose watch
+ - docker-compose up -d
+ To see the log : 
+ - docker-compose logs -f notify-nexus
+ - docker-compose logs -f subscription-manager
    
- **4.** **🎉  Open your browser and go to  `http://localhost:3005/`**
- 
-## Contributor 🤝
- - [**Noman Juwel**](https://github.com/shahriar-jewel)
-
-
-
+ **Open your browser and go to  `http://localhost:443/api/v1/status/`**
