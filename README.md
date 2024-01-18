@@ -1,5 +1,3 @@
-# ABOUT #
-
 # Notify nexus
 
 **Github Link** - ***https://pijush.grameenphone.com/mcms/notify-nexus.git***
@@ -49,7 +47,7 @@ Docker Commons consists some common services configured to run via docker script
  insert into subscribed_topics(msisdn, producer, channel, topic, type, status) values (88017XXXXXXXX, "cmp", "mygp",topic one", "whitelist", 1);
  ```
 
- ## Setting up Notify nexus
+ ## Setting up Notify nexus & Subscription manager
  - Rename docker/.envs/notify-nexus.example.env to docker/.envs/notify-nexus.env file:
  - Rename docker/.envs/subscription-manager.example.env to docker/.envs/subscription-manager.env file:
 
@@ -57,8 +55,10 @@ Docker Commons consists some common services configured to run via docker script
  - docker-compose build --no-cache
  - docker-compose watch
  - docker-compose up -d
+
  To see the log : 
  - docker-compose logs -f notify-nexus
  - docker-compose logs -f subscription-manager
    
- **Open your browser and go to  `http://localhost:443/api/v1/status/`**
+ **Open your browser and go to  `https://localhost:443/api/v1/status`**
+ 
